@@ -1,0 +1,3 @@
+- typing game
+- words are physics objects that stack up one by one as they come down
+- If the stack gets too high, you lose
