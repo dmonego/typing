@@ -22,8 +22,10 @@ end
 function wordObject()
     local this = {}
     this.word = word_collection[math.random(#word_collection)]
+    this.width = font:getWidth(this.word)
+    this.height = font:getHeight()
     this.body = love.physics.newBody(world, math.random(650), 0, "dynamic")
-    this.shape = love.physics.newRectangleShape(font:getWidth(this.word), font:getHeight())
+    this.shape = love.physics.newRectangleShape(this.width, this.height)
     this.fixture = love.physics.newFixture(this.body, this.shape)
     return this
 end
@@ -65,8 +67,8 @@ function love.draw()
     for i, word in ipairs(objects.words) do 
         local angle = word.body:getAngle()
         local x, y = word.body:getPosition()
-        love.graphics.print(word.word, x, y, angle)
-
+        love.graphics.print(word.word, x, y, angle, 1, 1, word.width / 2, word.height / 2)
+        --love.graphics.polygon("line", word.body:getWorldPoints(word.shape:getPoints()))
     end
 
     love.graphics.setColor(0.3, 0.3, 0.3)
