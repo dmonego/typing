@@ -30,6 +30,7 @@ function scoreEntry(entry)
         end
     end
     if found > 0 then
+        score = score + found
         print("success")
     else
         print("fail")
@@ -56,9 +57,13 @@ function love.load()
 
     objects = {}
 
+    score = 0
+
+    failures = 0
+
     objects.words = {}
     objects.words[#objects.words + 1] = Word:new()
-    newWordCountdown = 3.0
+    newWordCountdown = 0.2
     newWordCurrent = newWordCountdown
 
     objects.floor = {}
@@ -86,14 +91,7 @@ function love.draw()
     love.graphics.setColor(1, 1, 1)
     love.graphics.setFont(font)
     for i, word in ipairs(objects.words) do 
-        if word.state == "active" then
-            local angle = word.body:getAngle()
-            local x, y = word.body:getPosition()
-            love.graphics.print(word.word, x, y, angle, 1, 1, word.width / 2, word.height / 2)
-        elseif word.state == "exploding" then 
-            love.graphics.draw(word.particleEffect, word.particleX, word.particleY)
-        end
-        --love.graphics.polygon("line", word.body:getWorldPoints(word.shape:getPoints()))
+        word:draw()
     end
 
     love.graphics.setColor(0.3, 0.3, 0.3)
@@ -101,4 +99,5 @@ function love.draw()
 
     love.graphics.setColor(1, 1, 1)
     love.graphics.print(currentEntry, 20, 610)
+    love.graphics.printf(string.format("%d", score), 10, 610, 610, 'right')
 end

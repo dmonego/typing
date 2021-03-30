@@ -9,7 +9,7 @@ function Word:new(o)
     this.width = font:getWidth(this.word)
     this.height = font:getHeight()
     this.state = "active"
-    this.body = love.physics.newBody(world, math.random(650), 0, "dynamic")
+    this.body = love.physics.newBody(world, math.random(650 - this.width) + this.width / 2, 0, "dynamic")
     this.shape = love.physics.newRectangleShape(this.width, this.height)
     this.fixture = love.physics.newFixture(this.body, this.shape)
     return this
@@ -27,7 +27,7 @@ function Word:setState(newState)
         self.particleEffect:setParticleLifetime(1, 3)
         self.particleEffect:setEmissionRate(8)
 	    self.particleEffect:setSizeVariation(1)
-    	self.particleEffect:setLinearAcceleration(-50, -20, 50, 20)
+    	self.particleEffect:setLinearAcceleration(-500, -200, 500, 200)
         self.particleEffect:setColors(1, 1, 1, 1, 1, 1, 1, 0)
         print("exploding")
     elseif self.state == "exploding" and newState == "finished" then
@@ -44,6 +44,17 @@ function Word:update(dt)
             self:setState("finished")
         end
     end
+end
+
+function Word:draw()
+    if self.state == "active" then
+        local angle = self.body:getAngle()
+        local x, y = self.body:getPosition()
+        love.graphics.print(self.word, x, y, angle, 1, 1, self.width / 2, self.height / 2)
+    elseif self.state == "exploding" then 
+        love.graphics.draw(self.particleEffect, self.particleX, self.particleY)
+    end
+    --love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints()))
 end
 
 return Word

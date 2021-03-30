@@ -8,3 +8,5 @@ TODO
 - bottom panel - current score tracking
 - bottom panel - countdown tracking
 - track current progress on words
+- better animation
+- increase word speed on an interesting curve
