@@ -33,6 +33,7 @@ function scoreEntry(entry)
         score = score + found
         print("success")
     else
+        failures = failures .. "X"
         print("fail")
     end
 end
@@ -51,6 +52,8 @@ function love.load()
     world = love.physics.newWorld(0, 7, true)
 
     font = love.graphics.newFont("ka1.ttf", 24)
+    gameOverFont = love.graphics.newFont("Squarely.ttf", 80)
+
     word_collection = lines_from("words.txt")
 
     currentEntry = ""
@@ -59,7 +62,7 @@ function love.load()
 
     score = 0
 
-    failures = 0
+    failures = ""
 
     objects.words = {}
     objects.words[#objects.words + 1] = Word:new()
@@ -100,4 +103,13 @@ function love.draw()
     love.graphics.setColor(1, 1, 1)
     love.graphics.print(currentEntry, 20, 610)
     love.graphics.printf(string.format("%d", score), 10, 610, 610, 'right')
+    love.graphics.setColor(0.6, 0.2, 0.2)
+    love.graphics.printf(failures, 10, 610, 300, 'right')
+    if #failures >= 3 then
+        love.graphics.setColor(0,0,0)
+        love.graphics.rectangle('fill', 0, 200, 650, 200)
+        love.graphics.setColor(255,0,0)
+        love.graphics.setFont(gameOverFont)
+        love.graphics.printf("GAME OVER", 180, 200, 300, 'center')
+    end
 end

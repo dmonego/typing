@@ -5,8 +5,10 @@
 
 TODO
 
-- bottom panel - current score tracking
 - bottom panel - countdown tracking
 - track current progress on words
-- better animation
 - increase word speed on an interesting curve
+- increase word gravity on an interesting curve
+- Restart on gameover screen
+- Seperate scenes for start and game over
+- Build for osx and windows
