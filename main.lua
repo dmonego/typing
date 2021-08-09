@@ -44,6 +44,9 @@ function love.keypressed(key)
     elseif key == "return" then
         scoreEntry(currentEntry)
         currentEntry = ""
+        if #failures > 3 then
+            clear()
+        end
     end
 end
 
@@ -76,6 +79,16 @@ function love.load()
 
 
     love.window.setMode(650, 650)
+end
+
+function clear()
+    currentEntry = ""
+    score = 0
+    failures = ""
+    for i, word in ipairs(objects.words) do 
+        word:destroy()
+    end
+    objects.words = {}
 end
 
 function love.update(dt)

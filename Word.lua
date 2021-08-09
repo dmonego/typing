@@ -29,9 +29,9 @@ function Word:setState(newState)
 	    self.particleEffect:setSizeVariation(1)
     	self.particleEffect:setLinearAcceleration(-500, -200, 500, 200)
         self.particleEffect:setColors(1, 1, 1, 1, 1, 1, 1, 0)
-        print("exploding")
+        --print("exploding")
     elseif self.state == "exploding" and newState == "finished" then
-        print("Finished")
+        --print("Finished")
     end
     self.state = newState
 end
@@ -55,6 +55,13 @@ function Word:draw()
         love.graphics.draw(self.particleEffect, self.particleX, self.particleY)
     end
     --love.graphics.polygon("line", self.body:getWorldPoints(self.shape:getPoints()))
+end
+
+function Word:destroy()
+    if self.state ~= "exploding" then
+        self.body:destroy()
+    end
+    self:setState("finished")
 end
 
 return Word
